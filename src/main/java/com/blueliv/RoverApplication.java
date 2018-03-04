@@ -66,10 +66,24 @@ public class RoverApplication implements ApplicationRunner {
 				logger.debug("Rover moved : {}", r);
 				i += 2;
 			}
+
+			String response = createResponse(plateau);
+			System.out.println(response);
 		} catch (CommandFormatException e) {
 			logger.error(e.getMessage());
 			System.exit(1);
 		}
 
+	}
+
+	private String createResponse(Plateau plateau) {
+		StringBuilder sb = new StringBuilder();
+		for (Rover rover : plateau.getRovers()) {
+			sb.append(rover.getPosition().getX() + " " + rover.getPosition().getY() + " " + rover.getOrientation()
+					+ " ");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		String response = sb.toString();
+		return response;
 	}
 }
