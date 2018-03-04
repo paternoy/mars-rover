@@ -10,20 +10,26 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.blueliv.command.CommandFactoryProvider;
 import com.blueliv.command.PlateauCreationCommand;
+import com.blueliv.command.RoverCreationCommand;
+import com.blueliv.command.RoverInstructionsCommand;
 import com.blueliv.command.exception.CommandFormatException;
 import com.blueliv.model.Coordinates;
 import com.blueliv.model.Plateau;
+import com.blueliv.model.Rover;
 import com.blueliv.service.PlateauService;
 
 @SpringBootApplication
 public class RoverApplication implements ApplicationRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(RoverApplication.class);
-	
-	
+
 	@Autowired
 	PlateauService plateauService;
+
+	@Autowired
+	CommandFactoryProvider commandFactoryProvider;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RoverApplication.class, args);
@@ -34,15 +40,32 @@ public class RoverApplication implements ApplicationRunner {
 		try {
 			String[] arguments = args.getSourceArgs();
 			logger.debug("RoverApplication started with args : {}", Arrays.toString(arguments));
-			if(arguments.length<3 || arguments.length%2==0) {
+			if (arguments.length < 3 || arguments.length % 2 == 0) {
 				throw new CommandFormatException("Wrong number of input lines, must be odd");
 			}
-			
-			PlateauCreationCommand plateauCreationCommand = PlateauCreationCommand.parseCommand(arguments[0]);
-			Plateau plateau = plateauService.createPlateau(new Coordinates(plateauCreationCommand.getX()+1,
-					plateauCreationCommand.getY()+1));
+
+			PlateauCreationCommand plateauCreationCommand = (PlateauCreationCommand) commandFactoryProvider
+					.parseCommand(PlateauCreationCommand.class, arguments[0]);
+			Plateau plateau = plateauService.createPlateau(
+					new Coordinates(plateauCreationCommand.getX() + 1, plateauCreationCommand.getY() + 1));
 			logger.debug("Plateau created : {}", plateau);
-			
+
+			int i = 1;
+			while (i < arguments.length - 1) {
+				RoverCreationCommand roverCreationCommand = (RoverCreationCommand) commandFactoryProvider
+						.parseCommand(RoverCreationCommand.class, arguments[i]);
+				Rover r = plateauService.addRoverToPlateau(plateau, roverCreationCommand.getPosition(),
+						roverCreationCommand.getOrientation());
+				logger.debug("Rover created : {}", r);
+
+				RoverInstructionsCommand roverInstructionsCommand = (RoverInstructionsCommand) commandFactoryProvider
+						.parseCommand(RoverInstructionsCommand.class, arguments[i + 1]);
+				logger.debug("Rover instructions parsed : {}",
+						Arrays.toString(roverInstructionsCommand.getInstructions()));
+				plateauService.executeRoverInstructions(plateau, r, roverInstructionsCommand.getInstructions());
+				logger.debug("Rover moved : {}", r);
+				i += 2;
+			}
 		} catch (CommandFormatException e) {
 			logger.error(e.getMessage());
 			System.exit(1);
