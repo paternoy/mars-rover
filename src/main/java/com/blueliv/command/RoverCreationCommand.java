@@ -11,7 +11,6 @@ import com.blueliv.model.Coordinates;
 import com.blueliv.model.Orientation;
 
 public class RoverCreationCommand extends Command {
-	private static final Pattern commandPattern = Pattern.compile("(\\d+)\\s(\\d+)\\s([NESW])");
 	Coordinates position;
 	Orientation orientation;
 
@@ -31,6 +30,8 @@ public class RoverCreationCommand extends Command {
 
 	@Component
 	public static class RoverCreationCommandFactory extends CommandFactory {
+		private static final Pattern commandPattern = Pattern.compile("(\\d+)\\s(\\d+)\\s([NESW])");
+
 		@Autowired
 		CommandFactoryProvider commandFactoryProvider;
 

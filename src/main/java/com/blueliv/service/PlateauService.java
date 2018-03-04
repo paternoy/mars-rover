@@ -8,8 +8,8 @@ import com.blueliv.model.Rover;
 
 public interface PlateauService {
 	public Plateau createPlateau(Coordinates size);
-	
+
 	public Rover addRoverToPlateau(Plateau plateau, Coordinates position, Orientation orientation);
-	
-	public void executeRoverInstructions(Plateau plateau,Rover rover,Instruction[] instructions); 
+
+	public void executeRoverInstructions(Plateau plateau, Rover rover, Instruction[] instructions);
 }

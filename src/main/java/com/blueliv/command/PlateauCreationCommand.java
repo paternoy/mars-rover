@@ -3,15 +3,12 @@ package com.blueliv.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.blueliv.command.exception.CommandFormatException;
 
 public class PlateauCreationCommand extends Command {
-	private static final Pattern commandPattern = Pattern.compile("(\\d+)\\s(\\d+)");
 	int x;
 	int y;
 
@@ -31,6 +28,8 @@ public class PlateauCreationCommand extends Command {
 
 	@Component
 	public static class PlateauCreationCommandFactory extends CommandFactory {
+		private static final Pattern commandPattern = Pattern.compile("(\\d+)\\s(\\d+)");
+
 		@Autowired
 		CommandFactoryProvider commandFactoryProvider;
 

@@ -12,21 +12,17 @@ public class Plateau {
 		this.size = new Coordinates(size.x, size.y);
 	}
 
-
 	public List<Rover> getRovers() {
 		return rovers;
 	}
-
 
 	@Override
 	public String toString() {
 		return "Plateau [size=" + size + "]";
 	}
 
-
 	public Coordinates getSize() {
 		return new Coordinates(size);
 	}
-	
-	
+
 }

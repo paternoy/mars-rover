@@ -10,7 +10,6 @@ import com.blueliv.command.exception.CommandFormatException;
 import com.blueliv.model.Instruction;
 
 public class RoverInstructionsCommand extends Command {
-	private static final Pattern commandPattern = Pattern.compile("([MRL])+");
 	Instruction[] instructions;
 
 	public RoverInstructionsCommand(Instruction[] instructions) {
@@ -24,6 +23,8 @@ public class RoverInstructionsCommand extends Command {
 
 	@Component
 	public static class RoverInstructionsCommandFactory extends CommandFactory {
+		private static final Pattern commandPattern = Pattern.compile("([MRL])+");
+
 		@Autowired
 		CommandFactoryProvider commandFactoryProvider;
 
