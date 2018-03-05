@@ -37,7 +37,7 @@ public class PlateauCreationCommand extends Command {
 		public Command parseCommand(String command) throws CommandFormatException {
 			Matcher matcher = commandPattern.matcher(command);
 			if (!matcher.matches()) {
-				throw new CommandFormatException(String.format("Wrong plateau creation format for \"%s\"", command));
+				throw new CommandFormatException(String.format("Wrong plateau creation command for \"%s\"", command));
 			}
 
 			int x = Integer.parseInt(matcher.group(1));

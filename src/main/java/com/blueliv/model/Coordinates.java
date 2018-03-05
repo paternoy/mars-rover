@@ -28,4 +28,12 @@ public class Coordinates {
 	public String toString() {
 		return "[x=" + x + ", y=" + y + "]";
 	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 == null)
+			return false;
+		Coordinates c2 = (Coordinates) arg0;
+		return x == c2.x && y == c2.y;
+	}
 }

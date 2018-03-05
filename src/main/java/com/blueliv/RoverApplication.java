@@ -19,6 +19,7 @@ import com.blueliv.model.Coordinates;
 import com.blueliv.model.Plateau;
 import com.blueliv.model.Rover;
 import com.blueliv.service.PlateauService;
+import com.blueliv.service.exception.PlateauServiceException;
 
 @SpringBootApplication
 public class RoverApplication implements ApplicationRunner {
@@ -69,7 +70,7 @@ public class RoverApplication implements ApplicationRunner {
 
 			String response = createResponse(plateau);
 			System.out.println(response);
-		} catch (CommandFormatException e) {
+		} catch (CommandFormatException | PlateauServiceException e) {
 			logger.error(e.getMessage());
 			System.exit(1);
 		}
@@ -79,8 +80,8 @@ public class RoverApplication implements ApplicationRunner {
 	private String createResponse(Plateau plateau) {
 		StringBuilder sb = new StringBuilder();
 		for (Rover rover : plateau.getRovers()) {
-			sb.append(rover.getPosition().getX() + " " + rover.getPosition().getY() + " " + rover.getOrientation()
-					+ " ");
+			sb.append(
+					rover.getPosition().getX() + " " + rover.getPosition().getY() + " " + rover.getOrientation() + " ");
 		}
 		sb.deleteCharAt(sb.length() - 1);
 		String response = sb.toString();
