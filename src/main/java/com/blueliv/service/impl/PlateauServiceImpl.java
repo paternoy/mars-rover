@@ -29,14 +29,14 @@ public class PlateauServiceImpl implements PlateauService {
 	@Override
 	public Rover addRoverToPlateau(Plateau plateau, Coordinates position, Orientation orientation)
 			throws PlateauServiceException {
-		if (!isPositionInBounds(plateau, position))
+		if (!plateau.isPositionInBounds(position))
 			throw new PlateauServiceException(
 					String.format("Initial rover position %s out of plateau bounds", position));
 		if (!plateau.isPositionEmpty(position))
 			throw new PlateauServiceException(String.format("Initial rover position %s is already occupied", position));
-		Rover r = new Rover(position, orientation);
-		plateau.getRovers().add(r);
-		return r;
+		Rover rover = new Rover(position, orientation);
+		plateau.addRover(rover);
+		return rover;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class PlateauServiceImpl implements PlateauService {
 			switch (instruction) {
 			case M:
 				Coordinates nextPosition = move(rover.getPosition(), rover.getOrientation());
-				if (isPositionInBounds(plateau, nextPosition) && plateau.isPositionEmpty(nextPosition)) {
+				if (plateau.isPositionInBounds(nextPosition) && plateau.isPositionEmpty(nextPosition)) {
 					rover.setPosition(nextPosition);
 				}
 				break;
@@ -58,14 +58,6 @@ public class PlateauServiceImpl implements PlateauService {
 			logger.debug("Rover executed instruction \"{}\" and current position is {} {} ", instruction,
 					rover.getPosition(), rover.getOrientation());
 		}
-	}
-
-	private boolean isPositionInBounds(Plateau plateau, Coordinates position) {
-		if (position.getX() < 0 || position.getX() >= plateau.getSize().getX())
-			return false;
-		if (position.getY() < 0 || position.getY() >= plateau.getSize().getY())
-			return false;
-		return true;
 	}
 
 	private Orientation turn(Orientation orientation, Instruction instruction) {
