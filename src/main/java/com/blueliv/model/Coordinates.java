@@ -1,5 +1,12 @@
 package com.blueliv.model;
 
+/**
+ * This class represents a pair of integer values, and define a point in a
+ * 2-dimension space.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class Coordinates {
 	int x;
 	int y;
