@@ -1,4 +1,4 @@
-package com.blueliv.command;
+package com.blueliv.controller.command;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.blueliv.command.exception.CommandFormatException;
+import com.blueliv.controller.command.exception.CommandFormatException;
 
 
 @Component

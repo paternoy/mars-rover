@@ -10,8 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.blueliv.TestConfiguration;
-import com.blueliv.command.PlateauCreationCommand.PlateauCreationCommandFactory;
-import com.blueliv.command.exception.CommandFormatException;
+import com.blueliv.controller.command.Command;
+import com.blueliv.controller.command.PlateauCreationCommand;
+import com.blueliv.controller.command.PlateauCreationCommand.PlateauCreationCommandFactory;
+import com.blueliv.controller.command.exception.CommandFormatException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestConfiguration.class)
