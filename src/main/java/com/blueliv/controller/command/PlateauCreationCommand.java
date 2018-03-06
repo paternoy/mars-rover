@@ -1,4 +1,4 @@
-package com.blueliv.command;
+package com.blueliv.controller.command;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.blueliv.command.exception.CommandFormatException;
+import com.blueliv.controller.command.exception.CommandFormatException;
 
 public class PlateauCreationCommand extends Command {
 	int x;
@@ -37,7 +37,7 @@ public class PlateauCreationCommand extends Command {
 		public Command parseCommand(String command) throws CommandFormatException {
 			Matcher matcher = commandPattern.matcher(command);
 			if (!matcher.matches()) {
-				throw new CommandFormatException(String.format("Wrong plateau creation format for \"%s\"", command));
+				throw new CommandFormatException(String.format("Wrong plateau creation command for \"%s\"", command));
 			}
 
 			int x = Integer.parseInt(matcher.group(1));

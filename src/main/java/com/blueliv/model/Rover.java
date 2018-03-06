@@ -1,10 +1,18 @@
 package com.blueliv.model;
 
+/**
+ * This class represents a Rover vehicle and contains all needed data to
+ * preserve its state within the Plateau. This includes its position and
+ * orientation.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class Rover {
 
 	Coordinates position;
 	Orientation orientation;
-	
+
 	public Rover(Coordinates position, Orientation orientation) {
 		super();
 		this.position = position;

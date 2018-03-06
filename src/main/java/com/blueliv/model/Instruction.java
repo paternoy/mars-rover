@@ -1,5 +1,22 @@
 package com.blueliv.model;
 
+/**
+ * This enumeration contains all possible instructions a Rover can execute.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public enum Instruction {
-	M,L,R;
+	/**
+	 * Move
+	 */
+	M,
+	/**
+	 * Left
+	 */
+	L,
+	/**
+	 * Right
+	 */
+	R;
 }

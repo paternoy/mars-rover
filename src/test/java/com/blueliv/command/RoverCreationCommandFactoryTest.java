@@ -11,27 +11,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.blueliv.TestConfiguration;
 import com.blueliv.controller.command.Command;
-import com.blueliv.controller.command.PlateauCreationCommand;
-import com.blueliv.controller.command.PlateauCreationCommand.PlateauCreationCommandFactory;
+import com.blueliv.controller.command.RoverCreationCommand;
+import com.blueliv.controller.command.RoverCreationCommand.RoverCreationCommandFactory;
 import com.blueliv.controller.command.exception.CommandFormatException;
+import com.blueliv.model.Orientation;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestConfiguration.class)
-public class PlateauCreationCommandFactoryTest {
+public class RoverCreationCommandFactoryTest {
 
 	private static final String EMPTY_COMMAND = "";
-	private static final String LONG_COMMAND = "5 2 3";
-	private static final String RIGHT_COMMAND = "5 2";
-	private static final String NEGATIVE_COMMAND = "-5 2";
+	private static final String RIGHT_COMMAND = "1 3 N";
+	private static final String INCOMPLETE_COMMAND = "1 3";
+	private static final String WRONG_ORIENTATION_COMMAND = "1 3 R";
+	private static final String NEGATIVE_COMMAND = "-5 2 N";
 	@Autowired
-	PlateauCreationCommandFactory factory;
+	RoverCreationCommandFactory factory;
 
 	@Test
 	public void testRightCommandOK() {
 		try {
-			PlateauCreationCommand command = (PlateauCreationCommand) factory.parseCommand(RIGHT_COMMAND);
-			assertEquals(5, command.getX());
-			assertEquals(2, command.getY());
+			RoverCreationCommand command = (RoverCreationCommand) factory.parseCommand(RIGHT_COMMAND);
+			assertEquals(1, command.getPosition().getX());
+			assertEquals(3, command.getPosition().getY());
+			assertEquals(Orientation.N, command.getOrientation());
 		} catch (CommandFormatException e) {
 			fail("CommandFormatException not expected");
 		}
@@ -47,9 +50,18 @@ public class PlateauCreationCommandFactoryTest {
 	}
 
 	@Test
-	public void testLongCommandKO() {
+	public void testIncompleteCommandKO() {
 		try {
-			Command command = factory.parseCommand(LONG_COMMAND);
+			Command command = factory.parseCommand(INCOMPLETE_COMMAND);
+			fail("Method call should should throw a CommandFormatException");
+		} catch (CommandFormatException e) {
+		}
+	}
+
+	@Test
+	public void testWrongOrientationCommandKO() {
+		try {
+			Command command = factory.parseCommand(WRONG_ORIENTATION_COMMAND);
 			fail("Method call should should throw a CommandFormatException");
 		} catch (CommandFormatException e) {
 		}

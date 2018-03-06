@@ -1,4 +1,4 @@
-package com.blueliv.command.exception;
+package com.blueliv.controller.command.exception;
 
 public class CommandFormatException extends Exception {
 
