@@ -40,7 +40,6 @@ public class RoverRestController {
 			logger.error(e.getMessage(), e);
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (CommandFormatException e) {
-			logger.error(e.getMessage(), e);
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}

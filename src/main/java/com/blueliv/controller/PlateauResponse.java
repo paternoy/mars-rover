@@ -1,5 +1,7 @@
 package com.blueliv.controller;
 
+import java.util.StringJoiner;
+
 import com.blueliv.model.Plateau;
 import com.blueliv.model.Rover;
 
@@ -16,13 +18,11 @@ public class PlateauResponse {
 	}
 
 	public static PlateauResponse createResponse(Plateau plateau) {
-		StringBuilder sb = new StringBuilder();
+		StringJoiner sj = new StringJoiner(" ");
 		for (Rover rover : plateau.getRovers()) {
-			sb.append(
-					rover.getPosition().getX() + " " + rover.getPosition().getY() + " " + rover.getOrientation() + " ");
+			sj.add(rover.getPosition().getX() + " " + rover.getPosition().getY() + " " + rover.getOrientation());
 		}
-		sb.deleteCharAt(sb.length() - 1);
-		String response = sb.toString();
+		String response = sj.toString();
 		return new PlateauResponse(response);
 	}
 }
