@@ -8,6 +8,16 @@ import org.springframework.stereotype.Component;
 
 import com.blueliv.controller.command.exception.CommandFormatException;
 
+/**
+ * This class is a representation of the Plateau creation command. This command
+ * has the following syntax:
+ * "X Y"
+ * where X and Y are two positive integers that
+ * define Plateau's dimensions.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class PlateauCreationCommand extends Command {
 	int x;
 	int y;

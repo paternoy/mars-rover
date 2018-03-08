@@ -3,7 +3,6 @@ package com.blueliv.rest;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Before;
@@ -71,7 +70,6 @@ public class RoverRestControllerTest {
 		when(marsRoverControllerMock.processCommands(any(CompositeCommand.class))).thenReturn(response);
 
 		mockMvc.perform(post(ROVER_ENDPOINT).contentType(PLAIN_UTF_8_MEDIATYPE).content(REQUEST_BODY_OK))
-				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(PLAIN_UTF_8_MEDIATYPE))
 				.andExpect(content().string(OK_RESPONSE));
@@ -87,6 +85,7 @@ public class RoverRestControllerTest {
 
 		mockMvc.perform(post(ROVER_ENDPOINT).contentType(MediaType.TEXT_PLAIN).content(EMPTY_BODY))
 				.andExpect(status().isBadRequest());
+
 		verifyZeroInteractions(commandFactoryProviderMock);
 		verifyZeroInteractions(marsRoverControllerMock);
 

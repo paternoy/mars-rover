@@ -8,6 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.blueliv.controller.command.exception.CommandFormatException;
 
+/**
+ * This class is a representation actual expected command for this application.
+ * This command is composite with one PlateauCreationCommand followed by one or
+ * more pairs of RoverCreationCommand and RoverInstructionsCommand.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class CompositeCommand extends Command {
 	PlateauCreationCommand plateauCreationCommand;
 	List<RoverCreationCommand> roverCreationCommands = new ArrayList<>();

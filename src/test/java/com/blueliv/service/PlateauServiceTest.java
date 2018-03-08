@@ -44,6 +44,15 @@ public class PlateauServiceTest {
 	}
 
 	@Test
+	public void testPlateauCreationZeroDimensionKO() {
+		try {
+			plateauService.createPlateau(new Coordinates(5, 0));
+			fail("A PlateauServiceException was expected");
+		} catch (PlateauServiceException e) {
+		}
+	}
+
+	@Test
 	public void testRoverCreationOK() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(5, 5));
@@ -75,7 +84,7 @@ public class PlateauServiceTest {
 	}
 
 	@Test
-	public void testRoverCreationInOccupiedPosition() {
+	public void testRoverCreationInOccupiedPositionKO() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(4, 4));
 			Coordinates position = new Coordinates(3, 3);
@@ -90,7 +99,7 @@ public class PlateauServiceTest {
 	}
 
 	@Test
-	public void testRoverMoveInstruction() {
+	public void testRoverMoveInstructionOK() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(4, 4));
 			Coordinates position = new Coordinates(3, 3);
@@ -109,7 +118,7 @@ public class PlateauServiceTest {
 	}
 
 	@Test
-	public void testRoverMoveInstructionOffLimits() {
+	public void testRoverMoveInstructionOffLimitsOK() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(4, 4));
 			Coordinates position = new Coordinates(3, 4);
@@ -128,7 +137,7 @@ public class PlateauServiceTest {
 	}
 
 	@Test
-	public void testRoverMoveInstructionToOccupiedPosition() {
+	public void testRoverMoveInstructionToOccupiedPositionOK() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(4, 4));
 			Orientation orientation = Orientation.N;
@@ -153,7 +162,7 @@ public class PlateauServiceTest {
 	}
 
 	@Test
-	public void testRoverTurnLeftInstruction() {
+	public void testRoverTurnLeftInstructionOK() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(4, 4));
 			Coordinates position = new Coordinates(3, 4);
@@ -172,7 +181,7 @@ public class PlateauServiceTest {
 	}
 
 	@Test
-	public void testRoverTurnRightInstruction() {
+	public void testRoverTurnRightInstructionOK() {
 		try {
 			Plateau plateau = new Plateau(new Coordinates(4, 4));
 			Coordinates position = new Coordinates(3, 4);
@@ -188,6 +197,22 @@ public class PlateauServiceTest {
 			assertEquals(orientation, rover.getOrientation());
 		} catch (PlateauServiceException e) {
 			fail("Unexpected PlateauServiceException thrown when processing LEFT instruction");
+		}
+	}
+
+	@Test
+	public void testUndeployedRoverInstructionsKO() {
+		try {
+			Plateau plateau = new Plateau(new Coordinates(4, 4));
+			Coordinates position = new Coordinates(3, 4);
+			Orientation orientation = Orientation.N;
+			Rover rover = new Rover(position, orientation);
+			Instruction[] instructions = new Instruction[] { Instruction.M };
+
+			plateauService.executeRoverInstructions(plateau, rover, instructions);
+
+			fail("A PlateauServiceException was expected");
+		} catch (PlateauServiceException e) {
 		}
 	}
 

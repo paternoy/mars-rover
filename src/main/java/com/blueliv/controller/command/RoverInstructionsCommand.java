@@ -9,6 +9,18 @@ import org.springframework.stereotype.Component;
 import com.blueliv.controller.command.exception.CommandFormatException;
 import com.blueliv.model.Instruction;
 
+/**
+ * This class is a representation of Rover's instruction list. This command has
+ * the following syntax:
+ * "IIIIIIII" where each 'I' represents a single instruction. A single instruction
+ * can be one of the following values: 
+ * 'M': Move
+ * 'L': Turn left
+ * 'R': Turn right
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class RoverInstructionsCommand extends Command {
 	Instruction[] instructions;
 

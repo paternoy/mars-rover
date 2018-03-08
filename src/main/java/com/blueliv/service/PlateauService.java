@@ -18,12 +18,30 @@ public class PlateauService {
 
 	private static final Logger logger = LoggerFactory.getLogger(PlateauService.class);
 
+	/**
+	 * Creates a new Plateau with the dimensions specified in argument size.
+	 * 
+	 * @return the created Plateau
+	 * @throws PlateauServiceException
+	 *             if size argument is null or contains any dimension lower than 1.
+	 */
 	public Plateau createPlateau(Coordinates size) throws PlateauServiceException {
 		if (size == null)
 			throw new PlateauServiceException("Plateau size cannot be null");
+		if (size.getX() <= 0 || size.getY() <= 0)
+			throw new PlateauServiceException("None of plateau dimensions can be lower than 1");
 		return new Plateau(size);
 	}
 
+	/**
+	 * Creates a new Rover and deploys it in the specified Plateau, according to
+	 * initial position and orientation passed by parameter.
+	 * 
+	 * @return the created Rover
+	 * @throws PlateauServiceException
+	 *             if initial position is outside Plateau bounds or conflicts with
+	 *             another rovers position.
+	 */
 	public Rover addRoverToPlateau(Plateau plateau, Coordinates position, Orientation orientation)
 			throws PlateauServiceException {
 		if (!plateau.isPositionInBounds(position))
@@ -36,9 +54,17 @@ public class PlateauService {
 		return rover;
 	}
 
+	/**
+	 * Executes the instructions for the specified rover and updates its orientation
+	 * and position within the Plateau.
+	 * 
+	 * @throws PlateauServiceException
+	 *             if rover was not initially deployed in the Plateau.
+	 */
 	public void executeRoverInstructions(Plateau plateau, Rover rover, Instruction[] instructions)
 			throws PlateauServiceException {
-
+		if (!plateau.getRovers().contains(rover))
+			throw new PlateauServiceException("Rover is not deployed in the specified plateau.");
 		for (Instruction instruction : instructions) {
 			switch (instruction) {
 			case M:

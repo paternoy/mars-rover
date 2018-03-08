@@ -13,31 +13,44 @@ import org.springframework.stereotype.Component;
 
 import com.blueliv.controller.command.exception.CommandFormatException;
 
-
+/**
+ * This class provides an easy way to obtain and use all declared
+ * CommandFactories in this application.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 @Component
 public class CommandFactoryProvider {
 	private static final Logger logger = LoggerFactory.getLogger(CommandFactoryProvider.class);
-	
+
 	@Autowired
-    private List<CommandFactory> factories;
-	
-	private Map<Class<? extends Command>,CommandFactory> factoryRegistry = new HashMap<>();
-	
-	public CommandFactory getCommandFactory(Class<? extends Command> targetClass){
-		if (!factoryRegistry.containsKey(targetClass)) throw new RuntimeException(String.format("No CommandFactory found for class %s",targetClass.getSimpleName()));
+	private List<CommandFactory> factories;
+
+	private Map<Class<? extends Command>, CommandFactory> factoryRegistry = new HashMap<>();
+
+	public CommandFactory getCommandFactory(Class<? extends Command> targetClass) {
+		if (!factoryRegistry.containsKey(targetClass))
+			throw new RuntimeException(
+					String.format("No CommandFactory found for class %s", targetClass.getSimpleName()));
 		return factoryRegistry.get(targetClass);
 	}
-	
-	public Command parseCommand(Class<? extends Command> targetClass, String commandString) throws CommandFormatException{
+
+	public Command parseCommand(Class<? extends Command> targetClass, String commandString)
+			throws CommandFormatException {
 		return getCommandFactory(targetClass).parseCommand(commandString);
 	}
-	
+
+	/**
+	 * This method will execute after ApplicationContext initialization and will
+	 * register all available CommandFactories for later use.
+	 */
 	@PostConstruct
 	protected void registerFactories() {
 		for (CommandFactory commandFactory : factories) {
-			logger.debug("Found factory: {}",commandFactory);
+			logger.debug("Found factory: {}", commandFactory);
 			factoryRegistry.put(commandFactory.getFactoryClass(), commandFactory);
 		}
 	}
-	
+
 }

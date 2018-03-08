@@ -10,6 +10,16 @@ import com.blueliv.controller.command.exception.CommandFormatException;
 import com.blueliv.model.Coordinates;
 import com.blueliv.model.Orientation;
 
+/**
+ * This class is a representation of the Rover creation command. This command
+ * has the following syntax: 
+ * "X Y O"
+ * where X and Y are two positive integers for the Rover's initial position within the Plateau, and 'O' is the cardinal
+ * orientation.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class RoverCreationCommand extends Command {
 	Coordinates position;
 	Orientation orientation;

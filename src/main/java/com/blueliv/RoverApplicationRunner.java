@@ -1,6 +1,6 @@
 package com.blueliv;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.StringJoiner;
 
 import org.slf4j.Logger;
@@ -20,6 +20,16 @@ import com.blueliv.service.exception.PlateauServiceException;
 
 @Component
 @Profile("local")
+/**
+ * Main ApplicationRunner for command-line usage. This Runner is associated to a
+ * Spring profile called "local". When specifying this profile in the
+ * command-line, the application will run this class after preparing whole
+ * application context. Through specific application-local.properties file, web
+ * environment is disabled when using this profile.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class RoverApplicationRunner implements ApplicationRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(RoverApplicationRunner.class);
@@ -33,8 +43,8 @@ public class RoverApplicationRunner implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		try {
-			String[] arguments = args.getSourceArgs();
-			logger.debug("RoverApplication started with args : {}", Arrays.toString(arguments));
+			List<String> arguments = args.getNonOptionArgs();
+			logger.debug("RoverApplication started with args : {}", arguments);
 
 			StringJoiner stringJoiner = new StringJoiner("\n");
 			for (String argument : arguments) {

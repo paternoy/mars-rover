@@ -5,6 +5,13 @@ import java.util.StringJoiner;
 import com.blueliv.model.Plateau;
 import com.blueliv.model.Rover;
 
+/**
+ * Class that encloses expected application output. Output will contain position
+ * and orientation for each rover deployed in the plateau.
+ * 
+ * @author Jaume Paternoy
+ *
+ */
 public class PlateauResponse {
 	String response;
 
